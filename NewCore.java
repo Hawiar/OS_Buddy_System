@@ -8,23 +8,20 @@ public class NewCore extends Observable {
 	private final static int size = 64;
 	private MemoryGUI memGUI;
 	
-	public NewCore (MemoryGUI observer)
-	{
+	public NewCore (MemoryGUI observer) {
 		memory = new ArrayList<MemoryObject> (size / 2);
 		memory.add(new MemoryObject(0, 63));
 		memGUI = observer;
 		addObserver(memGUI);
 	}
 	
-	public NewCore (Object [] array) 
-	{
+	public NewCore (Object [] array) {
 		memory = new ArrayList<MemoryObject> (size / 2);
 		memory.add(new MemoryObject(0, 63));
 		startMemory(array);
 	}
 	
-	public ArrayList<MemoryObject> startMemory (Object [] array) throws MemoryException 
-	{
+	public ArrayList<MemoryObject> startMemory (Object [] array) throws MemoryException {
 		memory = new ArrayList<MemoryObject> (size / 2);
 		memory.add(new MemoryObject(0, 63));
 		for (int i = 0; i < array.length; i++) {
@@ -45,8 +42,7 @@ public class NewCore extends Observable {
 		return memory;
 	}
 	
-	public void add (MemoryObject item) 
-	{
+	public void add (MemoryObject item) {
 		int memSize = findSubSize(item.getSize());
 		while (true) {
 			for (int i = 0; i < memory.size(); i++) {
@@ -73,8 +69,7 @@ public class NewCore extends Observable {
 		}
 	}
 	
-	public boolean breakDown (int thisSize)
-	{
+	public boolean breakDown (int thisSize) {
 		int currSize = thisSize;
 		while (currSize <= size) {
 			for (int i = 0; i < memory.size(); i++) {
@@ -99,8 +94,7 @@ public class NewCore extends Observable {
 		return false;
 	}
 	
-	public static int findSubSize (int value) 
-	{
+	public static int findSubSize (int value) {
 		int subSize = size;
 		while (subSize > 1) {
 			if (value < subSize && subSize / 2 >= value) {
@@ -113,13 +107,10 @@ public class NewCore extends Observable {
 		return 0;
 	}
 	
-	public void remove (MemoryObject item) 
-	{
-		for (int i = 0; i < memory.size(); i++) 
-		{
+	public void remove (MemoryObject item) {
+		for (int i = 0; i < memory.size(); i++) {
 			MemoryObject current = memory.get(i);
-			if (current.getName() == item.getName()) 
-			{
+			if (current.getName() == item.getName()) {
 				MemoryObject newOne = new MemoryObject(current.getStart(), current.getEnd());
 				memory.set(i, newOne);
 				System.out.println("item removed");
@@ -132,10 +123,8 @@ public class NewCore extends Observable {
 	}
 	
 	//Removes item from memory by name, view is currently using this remove function
-	public void removeOne (String name)
-	{
-		if(exists(name) != -1)
-		{
+	public void removeOne (String name) {
+		if(exists(name) != -1) {
 			int pos = exists(name);
 			MemoryObject current = memory.get(pos);
 			MemoryObject newOne = new MemoryObject(current.getStart(), current.getEnd());
@@ -147,12 +136,10 @@ public class NewCore extends Observable {
 	}
 	
 	//Checks if item exists in memory or not
-	public int exists(String name)
-	{
+	public int exists(String name) {
 		boolean exists = false;
 		int i = 0;
-		while(!exists && i < memory.size())
-		{
+		while(!exists && i < memory.size()) {
 			MemoryObject current = memory.get(i);
 			try {
 				if(current.getName().equals(name)) {
@@ -168,8 +155,7 @@ public class NewCore extends Observable {
 		return -1;
 	}
 	
-	public void buddyUp () 
-	{
+	public void buddyUp () {
 		boolean finished = false;
 		while (!finished) {
 			finished = true;
@@ -194,12 +180,9 @@ public class NewCore extends Observable {
 	}
 	
 	//Prints each memory item in order along with its size, currently used for testing purposes
-	public void print()
-	{
-		for(int i = 0; i <memory.size(); i++)
-		{
+	public void print() {
+		for(int i = 0; i <memory.size(); i++) {
 			System.out.println(memory.get(i).getName() + " " + memory.get(i).getSize());
 		}
-	}
-	
+	}	
 }
