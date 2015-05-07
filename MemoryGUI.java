@@ -20,10 +20,11 @@ public class MemoryGUI extends JFrame implements ActionListener, Observer {
     		+ "5. <font color='gray'><em> To reset your memory press 'Reset'</em> </font><br>"
     		+ "6. <font color='gray'><em> To quit the program, press 'Quit'</em> </font></center><br><br></html>";
 	
+	MemoryGUIData data = new MemoryGUIData(0, false, 28, 64, 192, 16);
+	
 	private static JPanel buttonBar = new JPanel(); //Holds all the main user buttons
 	private static JPanel startBar = new JPanel(); //Holds start button
 	private static JLabel instructionsLabel; //Used for instructional display
-	MemoryGUIData data = new MemoryGUIData(0, false, 28, 64, 192, 16);
 	private static JTextField nameAdd = new JTextField("");
 	private static JTextField sizeBox = new JTextField("");
 	private static JTextField nameRemove = new JTextField("");
@@ -31,20 +32,16 @@ public class MemoryGUI extends JFrame implements ActionListener, Observer {
 	
 	
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		MemoryGUI MGUI = new MemoryGUI();
 	}
 	
-	public MemoryGUI()
-	{
+	public MemoryGUI() {
 		core = new NewCore (this);
 		makeFrame();
 	}
 	
-	public void makeFrame()
-	{
-		//MemoryController controller = new MemoryController();
+	public void makeFrame() {
 		data.frame = new JFrame("Memory Management System");
 		data.contentPane = data.frame.getContentPane();
 		
@@ -61,8 +58,7 @@ public class MemoryGUI extends JFrame implements ActionListener, Observer {
 		buttonBar.setLayout(new GridLayout (8,2));
 		data.p2.add(buttonBar, BorderLayout.EAST);
 		
-		if (data.startUsed == false) //Checks if user has already read the instructions
-		{
+		if (data.startUsed == false) { //Checks if user has already read the instructions
 			data.p1.setVisible(false);
 			data.p2.setVisible(false);
 			startBar.setLayout(new GridLayout (6,4));
@@ -70,8 +66,7 @@ public class MemoryGUI extends JFrame implements ActionListener, Observer {
 			data.contentPane.add(startBar, BorderLayout.CENTER);
 			data.contentPane.add(instructionsLabel, BorderLayout.NORTH);
 			instructionsLabel.setVisible(false);
-			Start();
-			
+			Start();			
 		}
 	}
 
@@ -81,8 +76,7 @@ public class MemoryGUI extends JFrame implements ActionListener, Observer {
 	 * is present once the user is prepared to being using the buddy
 	 * sysem for memory management.
 	 */
-	private void Start()
-	{
+	private void Start() {
 		instructionsLabel.setVisible(true);
 		JButton start = new JButton("Start");
 		start.addActionListener(new ActionListener() {
@@ -93,14 +87,12 @@ public class MemoryGUI extends JFrame implements ActionListener, Observer {
 				data.p1.setVisible(true);
 				data.p2.setVisible(true);
 				populate();}
-        });
-		
+            });	
 		startBar.add(start);
 	}
 	
 	//Populates the frame with buttons and textFields
-	private  void addButtons()
-	{
+	private  void addButtons() {
 		JButton add = new JButton("Add");
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -136,8 +128,6 @@ public class MemoryGUI extends JFrame implements ActionListener, Observer {
 				quit();}
         });
 		
-		
-		
 		//Populate buttons
 		JLabel blank1 = new JLabel("    ");
 		JLabel blank2 = new JLabel("    ");
@@ -164,10 +154,7 @@ public class MemoryGUI extends JFrame implements ActionListener, Observer {
 		buttonBar.add(quit);
 	}
 	
-	private void makeGrid()
-	{
-		//p1 = new JPanel();
-		//p1.setLayout(new FlowLayout());
+	private void makeGrid() {
 		data.p1.setLayout(new GridLayout(64,1));
 		data.p1.setBackground(Color.WHITE);
 		data.p1.setPreferredSize(new Dimension(data.MEM_BLOCK_WIDTH, data.MEM_BLOCK_SCALE));
@@ -176,7 +163,7 @@ public class MemoryGUI extends JFrame implements ActionListener, Observer {
 	}
 	
 	
-	public void update(Observable o, Object obj){
+	public void update(Observable o, Object obj) {
 		data.contentPane.remove(data.p1);
 		data.p1 = new JPanel();
 		data.p1.setLayout(new FlowLayout());
@@ -185,15 +172,15 @@ public class MemoryGUI extends JFrame implements ActionListener, Observer {
 		data.p1.setPreferredSize(new Dimension(data.MEM_BLOCK_WIDTH, data.MEM_BLOCK_SCALE));
 		data.contentPane.add(data.p1, BorderLayout.WEST);
 		ArrayList<MemoryObject> memory = (ArrayList<MemoryObject>) obj;
-		for(int i = 0; i < memory.size(); i++){
+		for(int i = 0; i < memory.size(); i++) {
 			MemoryObject temp = memory.get(i);
 			int start = temp.getStart();
 			int end = temp.getEnd();
 			
-			//here: color the section of the grid corresponding
+			//color the section of the grid corresponding
 			//to the space from START to END.
 			if (temp.getName() == null) {
-				for(int j = 0; j <= end - start; j++){
+				for(int j = 0; j <= end - start; j++) { 
 					JTextArea co = new JTextArea();
 					Color randomColor = Color.WHITE;
 					co.setBackground(randomColor);
@@ -204,7 +191,7 @@ public class MemoryGUI extends JFrame implements ActionListener, Observer {
 				}
 			}
 			else {
-				for(int j = 0; j <= end - start; j++){
+				for(int j = 0; j <= end - start; j++) {
 					JTextArea co = new JTextArea();
 					Color randomColor = Color.BLUE;
 					co.setBackground(randomColor);
@@ -217,61 +204,53 @@ public class MemoryGUI extends JFrame implements ActionListener, Observer {
 		}
 	}
 	
-	private void populate()
-	{
+	private void populate() {
 		addButtons();
 		makeGrid();
 		
 	}
 	
 	//User Add selection
-	private void add()
-	{
+	private void add() {
 		String name = nameAdd.getText();
 		String stringSize = sizeBox.getText();
 		
-		    //Item name must contain at least 1 character
-			if(name.equals(""))
-			{
-			  JOptionPane.showMessageDialog(data.frame,
+		//Item name must contain at least 1 character
+	    if(name.equals("")) {
+	    	JOptionPane.showMessageDialog(data.frame,
 					    "Please enter a name containing at least 1 character",
 					    "Name error",
 					    JOptionPane.ERROR_MESSAGE);
-			  nameAdd.setText("");
-			  return;
-			}
-			//Checks if the name already exists in memory, asks for a new one if it does
-			if(core.exists(name) != -1)
-			{
-			  JOptionPane.showMessageDialog(data.frame,
+			nameAdd.setText("");
+			return;
+		}
+		//Checks if the name already exists in memory, asks for a new one if it does
+		if(core.exists(name) != -1) {
+			JOptionPane.showMessageDialog(data.frame,
 					    "That name already exists, please choose another.",
 					    "Name error",
 					    JOptionPane.ERROR_MESSAGE);
-			  nameAdd.setText("");
-			  return;
-			}
+			nameAdd.setText("");
+			return;
+		}
 		//Checks to see if user entered a positive number for the size of the memory item	
-		try
-		{
+		try {
 			int size = Integer.parseInt(stringSize);
 			core.add(new MemoryObject(name, "add", size));
 			sizeBox.setText("");
 			nameAdd.setText("");
 	    }
-		catch(NumberFormatException e)
-		{
+		catch(NumberFormatException e) {
 			JOptionPane.showMessageDialog(data.frame,
 				    "Please enter a number in the 'Size' text field",
 				    "Number error",
 				    JOptionPane.ERROR_MESSAGE);
 			sizeBox.setText("");
-		}
-		
+		}	
 	}
 	
 	//User remove selection
-	private void remove()
-	{
+	private void remove() {
 		String name = nameRemove.getText();
 		if (name.equals("")) {
 			JOptionPane.showMessageDialog(data.frame,
@@ -293,13 +272,11 @@ public class MemoryGUI extends JFrame implements ActionListener, Observer {
 		}
 	}
 	
-	private void print()
-	{
+	private void print() {
 		core.print();
 	}
 	
-	private void random()
-	{
+	private void random() {
 		Random numRand = new Random();
 		Random nameRand = new Random();
 		Random rand = new Random();
@@ -310,8 +287,7 @@ public class MemoryGUI extends JFrame implements ActionListener, Observer {
 				         "power","thunder","controller","dexterity","keyboard","thunderous","blizzard","hazardous","algorithm","destruction","operation","assignment","despicable"};
 		
 		boolean choice = rand.nextBoolean();
-		if(choice)
-		{
+		if(choice) {
 			//pick a random size from 1-64
 			int size = numRand.nextInt((64 - 1) + 1) + 1;
 			String name = names[(int) (Math.random() * names.length)];
@@ -319,17 +295,14 @@ public class MemoryGUI extends JFrame implements ActionListener, Observer {
 			sizeBox.setText(Integer.toString(size));
 			add();
 		}
-		else
-		{	
+		else {	
 			String name = names[(int) (Math.random() * names.length)];
 			nameRemove.setText(name);
 			remove();
-			//System.out.println(name);
 		}
 	}
 	
-	private void reset()
-	{
+	private void reset() {
 		data.frame.dispose();
 		makeFrame();
 		makeGrid();
