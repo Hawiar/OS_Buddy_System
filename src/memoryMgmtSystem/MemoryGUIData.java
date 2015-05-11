@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 public class MemoryGUIData {
-	//public MemoryController controller;
 	public NewCore mem;
 	public JFrame frame;
 	public JMenuBar menubar;

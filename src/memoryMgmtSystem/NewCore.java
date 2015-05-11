@@ -53,7 +53,6 @@ public class NewCore extends Observable {
 					item.setEnd(temp.getEnd());
 					item.setSize(memSize);
 					memory.set(i, item);
-					System.out.println("Item inserted");
 					setChanged();
 					notifyObservers(memory);
 					return;
@@ -63,7 +62,6 @@ public class NewCore extends Observable {
 				;
 			}
 			else {
-				System.out.println("Item cannot fit");
 				return;
 			}
 		}
